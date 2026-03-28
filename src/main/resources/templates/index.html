@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolyom</title>
+    <meta name="description"
+        content="Kişisel yazılım geliştirici portfolyom. Modern ve yenilikçi projelerimi ve teknoloji deneyimlerimi inceleyin.">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">Portfolyo<span>.</span></div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#about">Hakkımda</a></li>
+                <li><a href="#projects">Projeler</a></li>
+                <li><a href="#contact">İletişim</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <span class="greeting">Merhaba, Siteme Hoş Geldiniz</span>
+                <h1 class="title">Yazılım Geliştirici<br></h1>
+                <p class="subtitle">Bilişim Sistemleri Mühendisliği 3. sınıf öğrencisi olarak yazılım geliştirme ve
+                    veritabanı sistemleri alanında uzmanlaşmaktayım. Java ve C# dillerinde projeler geliştiriyor,
+                    özellikle Spring Boot ile backend mimarileri üzerine çalışıyorum.
+
+                </p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn btn-primary">Projelerimi Gör</a>
+                    <a href="#contact" class="btn btn-outline">İletişime Geç</a>
+                </div>
+            </div>
+            <!-- Decorative Elements -->
+            <div class="glow-orb orb-1"></div>
+            <div class="glow-orb orb-2"></div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section">
+            <div class="section-heading">
+                <h2>Öne Çıkan Projelerim</h2>
+                <div class="heading-line"></div>
+            </div>
+            <div class="project-grid">
+                <!-- Dynamic Projects -->
+                <article class="project-card" th:each="project : ${projects}">
+                    <div class="card-content">
+                        <h3 th:text="${project.title}">Proje Başlığı</h3>
+                        <p th:text="${project.description}">Proje Açıklaması</p>
+                        <ul class="tech-stack">
+                            <li th:each="tech : ${#strings.arraySplit(project.techStack, ',')}"
+                                th:text="${#strings.trim(tech)}">Teknoloji</li>
+                        </ul>
+                        <a th:href="${project.projectUrl}" class="project-link">Detayları İncele &rarr;</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="contact-container glass-panel">
+                <h2>Birlikte Çalışmaya Ne Dersiniz?</h2>
+                <p style="margin-bottom: 20px; color: #cbd5e1; font-size: 1.1rem;">Benimle iletişime geçin</p>
+                
+                <div th:if="${successMessage}" class="alert-success">
+                    <p th:text="${successMessage}"></p>
+                </div>
+
+                <!-- FormSubmit API: Dirençli ve şifresiz mail eklentisi -->
+                <form action="https://formsubmit.co/ajax/dllivanur@gmail.com" method="POST" class="contact-form" id="contactForm">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Adınız Soyadınız" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="E-Posta Adresiniz" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" rows="4" placeholder="Mesajınız..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">Mesajı Gönder</button>
+                </form>
+                <div class="social-links">
+                    <a href="https://github.com/livanurdeli" target="_blank" class="social-icon">GitHub</a>
+                    <a href="https://www.linkedin.com/in/livanur-deli-a8a8bb30a/" class="social-icon">LinkedIn</a>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="year">2026</span> - Tüm Hakları Saklıdır.</p>
+    </footer>
+
+    <!-- Tarayıcı önbelleğini geçmek için v=2 eklendi -->
+    <script th:src="@{/js/script.js(v=2)}"></script>
+</body>
+
+</html>
